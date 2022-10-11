@@ -15,7 +15,7 @@ function App() {
         {/* <Route path='/profile/:username' element={<Profile/>}></Route> */}
         <Route path='*' element={<Error/>}/>
       </Routes>
-      <div className="footer"> This is footer dont mind me </div>
+      <footer> <p>This is footer dont mind me</p></footer>
     </Router>
   );
 }

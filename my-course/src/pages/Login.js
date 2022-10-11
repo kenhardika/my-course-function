@@ -8,14 +8,7 @@ async function loginAPI(data){
         formBody.push(encodedKey + "=" + encodedValue);
     }
     formBody = formBody.join("&");
-    // console.log(formBody);
-    
-    // console.log(JSON.stringify(data));
-    // let response = await item.json();
     return fetch("https://staging.komunitasmea.com/api/login", {
-        // headers: {
-        //     'Content-Type': 'application/x-www-form-urlencoded'
-        // },
         method:'POST', 
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
@@ -24,7 +17,6 @@ async function loginAPI(data){
         credentials: 'include',
         body: formBody,
     }).then((response) => response.json()); 
-    // console.log(response);
 }
 
 class login extends Component {
@@ -37,15 +29,9 @@ class login extends Component {
     }
     
     render() {
-
-        const {email, password} = this.state;
-
-        // let data = {
-        //             email: 'candidate@mail.com',
-        //             password: 'candidate123'
-        //         }
-        console.log(email);
-        console.log(password);
+        // const {email, password} = this.state;
+        // console.log(email);
+        // console.log(password);
 
         const handleSubmit = async e => {
             e.preventDefault();
@@ -63,32 +49,45 @@ class login extends Component {
         
         return (
             <div className='loginPage'>
-                <p>Welcome to the Login Page</p>
-                <form className='formLayer' method="post" action='/' onSubmit={ handleSubmit }>
-                    <div className="inputForm">
-                        <label htmlFor="inputText">Email: </label>
-                        <input type="text" id="inputText" onChange={(e)=>{ 
-                            this.setState({
-                                email: e.target.value
-                            })
-                         }} required/>
+                <div className="left-section">
+                    <div className="layerText">
+                        <p> KOMUNITAS MEA </p>
+                        <p> Komunitas Jago Jualan Online </p>
                     </div>
-                    <div className="inputForm">
-                        <label htmlFor="inputPass">Password: </label>
-                        <input type="password" id="inputPass" onChange={(e)=>{ 
-                            this.setState({
-                                password: e.target.value
-                            })
-                         }} required/>
+                </div>
+                <div className="right-section">
+                    <div className="right-layer">
+                            <div className="loginTitleLayer">
+                                <p>MASUK</p>  
+                            </div>
+                            <div className="loginBannerLayer">
+                                <p>Silakan Masuk ke akun Komunitas MEA kamu!</p>
+                            </div>
+                            <form className='formLayer' method="post" action='/' onSubmit={ handleSubmit }>
+                                <div className="inputForm">
+                                    <label htmlFor="inputText">Email: </label>
+                                    <input type="text" id="inputText" onChange={(e)=>{ 
+                                        this.setState({
+                                            email: e.target.value
+                                        })
+                                    }} required/>
+                                </div>
+                                <div className="inputForm">
+                                    <label htmlFor="inputPass">Password: </label>
+                                    <input type="password" id="inputPass" onChange={(e)=>{ 
+                                        this.setState({
+                                            password: e.target.value
+                                        })
+                                    }} required/>
+                                </div>
+                                <div className="layerButton">
+                                    <button id='submitBtn' type='submit' > Masuk </button>    
+                                </div>     
+                            </form>
                     </div>
-                    <button id='submitBtn' type='submit' > Masuk </button>     
-                </form>
-
+                </div> 
             </div>
         );
     }
 }
-
-
-
 export default login;       

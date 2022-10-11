@@ -1,42 +1,110 @@
-.App {
-  text-align: center;
+*{
+  margin: 0;
+  box-sizing: border-box;
 }
-
-/* .App-logo {
-  height: 40vmin;
-  pointer-events: none;
-} */
+:root{
+  --colorWhite : rgb(226, 226, 226);
+  --colorOrange: #e47909;
+  --colorGray: rgb(100, 100, 100);
+}
 
 .loginPage{
-  background-color: rgb(253, 230, 230);
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+  height: 100vh;
+  width: 100vw;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+}
+
+.left-section{
+  display: flex;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  width: 100%;
+  background-image: url(./img/building.jpg);
+  background-size: cover;
+  background-position: center;
 }
 
-.App-link {
-  color: #61dafb;
+.layerText{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: rgba(0, 0, 0, 0.548);
+  color: var(--colorWhite);
+  width: 100%;
+  height: 100%;
+  gap: 10px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.layerText p:first-child{
+  font-size: 1.8rem;
 }
+
+.right-section{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+}
+.right-layer{
+  width: 100%;
+  height: 100%;
+  display: grid;
+  justify-content: center;
+
+  grid-template-rows: 20% 20% 60%;
+}
+
+.loginTitleLayer{
+  width: 100%;
+
+  border-bottom: 1px solid gray;
+
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  font-size: 2rem;
+  color: var(--colorOrange);
+}
+
+.loginTitleLayer p{
+  border-bottom: 3px solid var(--colorOrange);
+}
+
+.loginBannerLayer{
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 0.8rem;
+  color: var(--colorGray);
+
+}
+
+
+footer{
+  /* display: flex;
+  align-items: center;
+  justify-content: center; */
+  position: absolute;
+  top: 98vh;
+  width: 100%;
+  height: 2vh;
+  font-size: 0.8rem;
+  color: var(--colorWhite);
+  background-color: rgba(0, 0, 0, 0.466);
+}
+
+footer p {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+
