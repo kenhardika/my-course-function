@@ -15,7 +15,7 @@ function App() {
         {/* <Route path='/profile/:username' element={<Profile/>}></Route> */}
         <Route path='*' element={<Error/>}/>
       </Routes>
-      <footer> <p>This is footer dont mind me</p></footer>
+      <footer> <p>Kenza Mahardika @ 2022</p></footer>
     </Router>
   );
 }

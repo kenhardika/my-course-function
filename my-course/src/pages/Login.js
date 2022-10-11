@@ -16,7 +16,7 @@ async function loginAPI(data){
         mode: 'cors', 
         credentials: 'include',
         body: formBody,
-    }).then((response) => response.json()); 
+    }).then((response) => response.json()).catch((reject)=> console.log(reject));
 }
 
 class login extends Component {
@@ -25,26 +25,36 @@ class login extends Component {
         this.state = {
             email: 'default',
             password: 'default',
+            errorLogin: false,
         }
     }
     
     render() {
-        // const {email, password} = this.state;
-        // console.log(email);
-        // console.log(password);
 
         const handleSubmit = async e => {
             e.preventDefault();
             const responseAPI = await loginAPI(this.state);
             console.log(responseAPI);
-
             if (responseAPI.message === 'Success.'){
                 console.log('login success');
                 window.location.href = `/mycourse/${responseAPI.data.user_id}`; // ${}
             } 
             else{
+                this.setState({
+                    errorLogin: true
+                });
                 console.log('login failed');
-            }
+                return 
+            } 
+        }
+        
+        if (this.state.errorLogin === true){
+            this.setState({
+                errorLogin: false
+            });
+            window.location.href = `/`; // ${}
+            alert('Error: Login Failed');
+            return 
         }
         
         return (
@@ -65,24 +75,33 @@ class login extends Component {
                             </div>
                             <form className='formLayer' method="post" action='/' onSubmit={ handleSubmit }>
                                 <div className="inputForm">
+                                    <label htmlFor="inputName">Nama Lengkap: </label>
+                                    <input type="text" id="inputName" placeholder='Masukan Nama Lengkap' required/>
+                                </div>
+                                
+                                <div className="inputForm">
                                     <label htmlFor="inputText">Email: </label>
-                                    <input type="text" id="inputText" onChange={(e)=>{ 
+                                    <input type="text" id="inputText" placeholder='Masukan Email' onChange={(e)=>{ 
                                         this.setState({
                                             email: e.target.value
                                         })
                                     }} required/>
                                 </div>
                                 <div className="inputForm">
-                                    <label htmlFor="inputPass">Password: </label>
-                                    <input type="password" id="inputPass" onChange={(e)=>{ 
+                                    <label htmlFor="inputPass">Kata Sandi: </label>
+                                    <input type="password" id="inputPass" placeholder='Masukan Kata Sandi' onChange={(e)=>{ 
                                         this.setState({
                                             password: e.target.value
                                         })
                                     }} required/>
                                 </div>
+                                
+                                <a href='/'> lupa kata sandi? </a>
+                                
                                 <div className="layerButton">
                                     <button id='submitBtn' type='submit' > Masuk </button>    
-                                </div>     
+                                </div>
+                                <div className='errorLayer'></div>
                             </form>
                     </div>
                 </div> 

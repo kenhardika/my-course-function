@@ -61,7 +61,7 @@
 .loginTitleLayer{
   width: 100%;
 
-  border-bottom: 1px solid gray;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.651);
 
   display: flex;
   align-items: flex-end;
@@ -85,6 +85,79 @@
 
 }
 
+.loginBannerLayer p {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.247);
+}
+
+.formLayer{
+  display: flex;
+  flex-direction: column;
+  width: 30vw;
+  gap: 10px;
+}
+
+.inputForm{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  color: var(--colorOrange);
+  font-size: 0.9rem;
+  gap: 5px;
+}
+
+.inputForm input{
+  height: 50px;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  box-shadow: .5px .5px 5px .5px gray;
+  outline: none;
+  color: rgb(44, 44, 44);
+  font-size: 1.1rem;
+  padding: 5px;
+}
+
+.inputForm input:focus{
+  border: 1px solid rgb(69, 184, 255);
+}
+
+.formLayer a {
+  font-size: 0.7rem;
+  text-decoration: none;
+  color: var(--colorOrange);
+}
+
+.formLayer a:hover{
+  color: #c56b0a;
+}
+
+.layerButton{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 20px;
+}
+
+.layerButton button{
+  width: 100%;
+  height: 5vh;
+  border-radius: 10px;
+  background-color: var(--colorOrange);
+  color: white;
+  border: 0px solid transparent;
+  font-size: 1.3rem;
+}
+.layerButton button:hover{
+  background-color: #ff8400;
+  cursor: pointer;
+}
+
+.layerButton button:active{
+  transform: translateY(2px);
+}
 
 footer{
   /* display: flex;
@@ -108,3 +181,32 @@ footer p {
 }
 
 
+header{
+  display: grid;
+  width: 100%;
+  height: 10vh;
+  color: var(--colorWhite);
+  grid-template-columns: 70% 30%;
+  background-color: rgb(0, 0, 94);
+
+}
+
+.logo-layer{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 5vw;
+}
+
+.profile-layer{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+#avatar{
+  width: 40px;
+  height: 40px;
+  background-color: #e47909;
+}
