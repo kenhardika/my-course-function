@@ -11,7 +11,7 @@ function App() {
     <Router>
       {/* outside this Routes, (nav & footer) will stay, page wont changing. only inside Routes could change */}
       <Routes>
-        <Route path='/' element={<Login/>}/>
+        <Route path='/my-course' element={<Login/>}/>
         <Route path="/mycourse/:allcourse" element={<MyCourse/>} />
         <Route path="/detailcourse/:alldetailcourse" element={<DetailCourse/>} />
         {/* <Route path='/profile/:username' element={<Profile/>}></Route> */}
