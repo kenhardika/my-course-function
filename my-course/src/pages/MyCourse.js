@@ -1,6 +1,6 @@
 import React from 'react';
 import {useParams} from 'react-router-dom';
-import Card from './Card';
+import { Card } from './Card';
 import Header from './Header';
 
 async function fetchCourses(user_id){
@@ -26,20 +26,28 @@ function MyCourse(props){
         const handleLogin = async (num)=>{
             const courseAPI = await fetchCourses(allcourse.allcourse);
             const courseAPIData = courseAPI.data[num];
+            const local = await JSON.parse(localStorage.getItem('data_user_login'));
+            // console.log(courseAPIData);
+            local.user_id = allcourse.allcourse;
+            localStorage.setItem("data_user_login", JSON.stringify(local));
+            // console.log(local);
             try{
                 const{
                     title: titleCourse,
                     instructors: {0:{ name: ins_name }},
                     instructor_role: ins_role,
                     instructors: {0:{ photo: ins_photo}},
-                    image: bgCourse
+                    image: bgCourse,
+                    course_id: courseid
                 } = courseAPIData;
                 return {
                         titleCourse, 
                         bgCourse, 
                         ins_name, 
                         ins_role, 
-                        ins_photo                     
+                        ins_photo,
+                        courseid,
+                        local                     
                 }
             }
             catch{
@@ -52,7 +60,7 @@ function MyCourse(props){
                 <Header></Header>
                 <main>
                     <p>
-                        Kelas{}
+                        Kelas
                     </p>
                     <div className="content">
                         <div className="cards">

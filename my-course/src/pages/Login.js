@@ -26,7 +26,8 @@ class login extends Component {
             email: 'default',
             password: 'default',
             errorLogin: false,
-            name: '', 
+            name: '',
+            user_id:'', 
         }
     }
     
@@ -34,9 +35,11 @@ class login extends Component {
 
         const handleSubmit = async e => {
             e.preventDefault();
-            const responseAPI = await loginAPI(this.state);
-            console.log(responseAPI);
+            const responseAPI = await loginAPI(this.state);        
+            // console.log(responseAPI);
             if (responseAPI.message === 'Success.'){
+                // console.log(responseAPI.data.user_id);
+                
                 console.log('login success');
                 localStorage.setItem("data_user_login", JSON.stringify(this.state));
                 window.location.href = `/mycourse/${responseAPI.data.user_id}`; // ${}

@@ -2,8 +2,8 @@ import React from 'react';
 
 function Error(props) {
     return (
-        <div>
-            Error Page not Found.
+        <div className='errorPage'>
+            Error 404: Page not Found.
         </div>
     );
 }

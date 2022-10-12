@@ -3,6 +3,7 @@ import {BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Login from './pages/Login';
 import Error from './pages/Error';
 import MyCourse from './pages/MyCourse';
+import DetailCourse from './pages/DetailCourse';
 
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Login/>}/>
         <Route path="/mycourse/:allcourse" element={<MyCourse/>} />
+        <Route path="/detailcourse/:alldetailcourse" element={<DetailCourse/>} />
         {/* <Route path='/profile/:username' element={<Profile/>}></Route> */}
         <Route path='*' element={<Error/>}/>
       </Routes>
