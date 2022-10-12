@@ -6,6 +6,8 @@
   --colorWhite : rgb(226, 226, 226);
   --colorOrange: #e47909;
   --colorGray: rgb(100, 100, 100);
+  --colorHeader: #253237;
+  --colorMain: #58717b;
 }
 
 .loginPage{
@@ -187,8 +189,7 @@ header{
   height: 10vh;
   color: var(--colorWhite);
   grid-template-columns: 70% 30%;
-  background-color: rgb(0, 0, 94);
-
+  background-color: var(--colorHeader);
 }
 
 .logo-layer{
@@ -198,15 +199,66 @@ header{
   padding-left: 5vw;
 }
 
+.logo-layer img{
+  width: 200px;
+}
+
 .profile-layer{
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  gap: 20px;
 }
 
 #avatar{
   width: 40px;
   height: 40px;
+  border-radius: 20px;
   background-color: #e47909;
+}
+
+main{
+  background-color: var(--colorMain);
+  height: 90vh;
+  width: 100vw;
+  display: flex;
+  padding: 200px 50px;
+  flex-direction: column;
+}
+
+main > p:first-child {
+  font-size: 1.5rem;
+}
+.content{
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.cards{
+  display: grid;
+  width: 100%;
+  height: 100%;
+  gap: 20px;
+
+  padding: 20px;
+
+  align-items: center;
+  justify-content: center;
+
+  grid-template-columns:repeat(auto-fit, minmax(250px, 320px));
+  grid-template-rows:repeat(auto-fit, minmax(90%, 100%));
+  
+  background-color: var(--colorHeader);
+  border-radius: 5px;
+}
+
+.card-inside{
+  
+  height: 100%;
+  background-color: white;
+  border-radius: 10px;
 }

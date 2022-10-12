@@ -26,6 +26,7 @@ class login extends Component {
             email: 'default',
             password: 'default',
             errorLogin: false,
+            name: '', 
         }
     }
     
@@ -37,6 +38,7 @@ class login extends Component {
             console.log(responseAPI);
             if (responseAPI.message === 'Success.'){
                 console.log('login success');
+                localStorage.setItem("data_user_login", JSON.stringify(this.state));
                 window.location.href = `/mycourse/${responseAPI.data.user_id}`; // ${}
             } 
             else{
@@ -76,7 +78,11 @@ class login extends Component {
                             <form className='formLayer' method="post" action='/' onSubmit={ handleSubmit }>
                                 <div className="inputForm">
                                     <label htmlFor="inputName">Nama Lengkap: </label>
-                                    <input type="text" id="inputName" placeholder='Masukan Nama Lengkap' required/>
+                                    <input type="text" id="inputName" placeholder='Masukan Nama Lengkap' onChange={(e)=>{
+                                        this.setState({
+                                            name: e.target.value
+                                        })
+                                    }} required/>
                                 </div>
                                 
                                 <div className="inputForm">
