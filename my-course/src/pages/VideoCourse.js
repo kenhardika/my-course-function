@@ -1,5 +1,6 @@
 import React from 'react';
 
+// use destructuring { link }
 function VideoCourse(props) {
     return (
         <div className='videoCourseLayer'>
