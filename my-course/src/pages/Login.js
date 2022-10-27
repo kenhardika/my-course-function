@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import { withRouter } from '../utils/withRouter';
+import { withRouter } from '../high-order-comp/withRouter';
 
 async function loginAPI(data){
     let formBody = [];
@@ -33,7 +33,9 @@ class Login extends Component {
     }
 
     navToMyCourse(linkResponse){
-      this.props.history.push(linkResponse);
+      // this.props.history.push(linkResponse);
+      //  return <Navigate to={linkResponse} replace={true} />
+      this.props.navigate(linkResponse)
     }
 
     onChangeEvent(e){
@@ -58,7 +60,8 @@ class Login extends Component {
       // console.log(responseAPI.data.user_id);
           console.log('login success');
           localStorage.setItem("data_user_login", JSON.stringify(this.state));
-          this.navToMyCourse(`/mycourse/${responseAPI.data.user_id}`);
+         
+         this.navToMyCourse(`/mycourse/${responseAPI.data.user_id}`);
           // navigate(`/mycourse/${responseAPI.data.user_id}`);
           // window.location.href = `/mycourse/${responseAPI.data.user_id}`;
       } 
@@ -167,4 +170,4 @@ class Login extends Component {
         );
     }
 }
-export default Login;       
+export default withRouter(Login);       

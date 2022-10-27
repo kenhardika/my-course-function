@@ -1,27 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import { useParams } from 'react-router-dom';
 import { Card } from '../components/Card';
-// import { Card } from '../components/Card';
-
 import Header from './Header';
-
-async function fetchCourses(user_id){
-    try{
-        const getCourse = await fetch(`https://staging.komunitasmea.com/api/user/${user_id}/courses/active`, {
-            method:'GET', 
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-              },
-            mode: 'cors', 
-            credentials: 'include',
-        });
-        const responseCourses = await getCourse.json();
-        return responseCourses
-    }
-    catch{
-        throw new Error('Fetch API Failed');
-    }    
-}
+import fetchCourses from '../utils/fetchCourseCards';
 
 function MyCourse(props) {
     const idCourse = useParams(); // or use id to call API Request
