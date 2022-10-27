@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 
+// ini bukan component, jadikan utils
 async function fetchDetailCourse(course_id, user_id){
     try{
         const getCourse = await fetch(`https://staging.komunitasmea.com/api/course?course_id=${course_id}&user_id=${user_id}`, {
@@ -18,8 +19,11 @@ async function fetchDetailCourse(course_id, user_id){
     }    
 }
 
+// ini pindah ke component
+// props di destructuring
 function Card(props) {
     // console.log(props.data.then((card)=>console.log(card)));
+    // ngga perlu props dimasukkin ke state langsung ambil data ke props
     const [titleCourse, setTitleCourse] = useState(null);
     const [ins_name, setIns_name] = useState(null);
     const [ins_role, setIns_role] = useState(null);
@@ -85,4 +89,4 @@ function Card(props) {
     );
 }
 
-export {Card, fetchDetailCourse};
+export { Card, fetchDetailCourse };
