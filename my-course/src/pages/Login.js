@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+// import { withRouter } from '../utils/withRouter';
 
 async function loginAPI(data){
     let formBody = [];
@@ -18,10 +19,10 @@ async function loginAPI(data){
         body: formBody,
     }).then((response) => response.json()).catch((reject)=> console.log(reject));
 }
-
 class login extends Component {
     constructor(props){
         super(props);
+        this.navToMyCourse = this.navToMyCourse.bind(this);
         this.state = {
             email: 'default',
             password: 'default',
@@ -31,44 +32,49 @@ class login extends Component {
         }
     }
 
-    // taro handle submit di sini
-    // handleSubmit() {
+    navToMyCourse(linkResponse){
+      this.props.history.push(linkResponse);
+    }
+
+    onChangeEvent(e){
+      e.preventDefault();
+        this.setState({
+            [e.target.name]: e.target.value
+        });
+        // console.log(this.state);
+    }
+
+    // taro handle submit di sini done
+    // handleSubmit() { done
     // }
     
+     // handle submit jangan di dalam render done
+    handleSubmit = async (e) => {
+      e.preventDefault();
+      // const navigate = useNavigate();
+      const responseAPI = await loginAPI(this.state);        
+      // console.log(responseAPI);
+      if (responseAPI.message === 'Success.'){
+      // console.log(responseAPI.data.user_id);
+          console.log('login success');
+          localStorage.setItem("data_user_login", JSON.stringify(this.state));
+          this.navToMyCourse(`/mycourse/${responseAPI.data.user_id}`);
+          // navigate(`/mycourse/${responseAPI.data.user_id}`);
+          // window.location.href = `/mycourse/${responseAPI.data.user_id}`;
+      } 
+      else if(responseAPI.message !== 'Success.'){
+        this.setState({
+            errorLogin: true
+        });
+        console.log('Error: login failed, API fetch failed');
+        alert('Error: Login Failed');
+        return 
+      } 
+      // ini jangan update state di dalam render done
+     
+    }
     render() {
 
-        // handle submit jangan di dalam render
-        const handleSubmit = async e => {
-            e.preventDefault();
-            const responseAPI = await loginAPI(this.state);        
-            // console.log(responseAPI);
-            if (responseAPI.message === 'Success.'){
-                // console.log(responseAPI.data.user_id);
-                
-                console.log('login success');
-                localStorage.setItem("data_user_login", JSON.stringify(this.state));
-                window.location.href = `/mycourse/${responseAPI.data.user_id}`; // ${}
-            } 
-            else{
-                this.setState({
-                    errorLogin: true
-                });
-                console.log('login failed');
-                return 
-            } 
-        }
-        
-        // ini jangan update state di dalam render
-        if (this.state.errorLogin === true){
-            this.setState({
-                errorLogin: false
-            });
-            // ini jangan redirect di dalam render
-            window.location.href = `/`; // ${}
-            alert('Error: Login Failed');
-            return 
-        }
-        
         return (
           <div className="loginPage">
             <div className="left-section">
@@ -89,7 +95,7 @@ class login extends Component {
                   className="formLayer"
                   method="post"
                   action="/"
-                  onSubmit={handleSubmit}
+                  onSubmit={this.handleSubmit}
                 >
                   <div className="inputForm">
                     <label htmlFor="inputName">Nama Lengkap: </label>
@@ -97,46 +103,51 @@ class login extends Component {
                       type="text"
                       id="inputName"
                       placeholder="Masukan Nama Lengkap"
-                      onChange={(e) => {
-                        this.setState({
-                          name: e.target.value,
-                        });
-                      }}
+                      name='name'
+                      // onChange={(e) => {
+                      //   this.setState({
+                      //     name: e.target.value,
+                      //   });
+                      // }}
+                      onChange={(e)=> this.onChangeEvent(e)}
                       required
                     />
                   </div>
 
                   <div className="inputForm">
                     <label htmlFor="inputText">Email: </label>
-                    {/* onchange nya coba dibikin method */}
+                    {/* onchange nya coba dibikin method done */} 
                     <input
                       type="text"
                       id="inputText"
-                                    placeholder="Masukan Email"
-                                    // ini kasih nama email
-                                    name="email"
-                      //   onChange={this.onChange} pakai e.target.name buat get property nya dan value nya e.target.value
-                      onChange={(e) => {
-                        this.setState({
-                          email: e.target.value,
-                        });
-                      }}
+                      placeholder="Masukan Email"
+                      // ini kasih nama email done
+                      name="email"
+                      //   onChange={this.onChange} pakai e.target.name buat get property nya dan value nya e.target.value done
+                      // onChange={(e) => {
+                      //   this.setState({
+                      //     email: e.target.value,
+                      //   });
+                      // }}
+                      onChange={(e)=> this.onChangeEvent(e)}
                       required
                     />
                   </div>
                   <div className="inputForm">
                     <label htmlFor="inputPass">Kata Sandi: </label>
-                    {/* onchange nya coba dibikin method */}
+                    {/* onchange nya coba dibikin method done*/}
                     <input
                       type="password"
                       id="inputPass"
                       placeholder="Masukan Kata Sandi"
+                      name='password'
                       //   onChange={this.onChange}
-                      onChange={(e) => {
-                        this.setState({
-                          password: e.target.value,
-                        });
-                      }}
+                      // onChange={(e) => {
+                      //   this.setState({
+                      //     password: e.target.value,
+                      //   });
+                      // }}
+                      onChange={(e)=> this.onChangeEvent(e)}
                       required
                     />
                   </div>
@@ -145,8 +156,7 @@ class login extends Component {
 
                   <div className="layerButton">
                     <button id="submitBtn" type="submit">
-                      {" "}
-                      Masuk{" "}
+                      Masuk
                     </button>
                   </div>
                   <div className="errorLayer"></div>

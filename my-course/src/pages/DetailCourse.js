@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { fetchDetailCourse } from './Card';
+import fetchDetailCourse from '../utils/fetchDetailCourse';
 import Header from './Header';
 import VideoCourse from './VideoCourse';
 
@@ -9,9 +9,7 @@ let DEFAULT_LINK = "https://smarketing-staging.storage.googleapis.com/course-con
 function DetailCourse(props) {
     // console.log(courseid.alldetailcourse);
     let courseid = useParams();
-
     // const [link, setLink] = useState();
-
     async function fetchAPIDetailCourse() {
       // useEffect(() => {
       //   fetch("https://randomuser.me/api/")
@@ -20,7 +18,6 @@ function DetailCourse(props) {
       //       setData(data);
       //     });
       // }, [setData]);
-
       let local = await JSON.parse(localStorage.getItem("data_user_login"));
       let detailCourseAPI = await fetchDetailCourse(
         courseid.alldetailcourse,
@@ -70,7 +67,7 @@ function DetailCourse(props) {
                 <VideoCourse link = {DEFAULT_LINK}/>
                 <div className="layerSwitchButton">
                     <button >previous</button>
-                    <button onClick={ handleNextBtn }>next</button>
+                    <button onClick= { handleNextBtn }>next</button>
                 </div>
             </main>
         </div>

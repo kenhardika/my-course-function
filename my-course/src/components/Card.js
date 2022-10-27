@@ -5,35 +5,49 @@ import handleToDetailCourse from '../utils/handleToDetailCourse';
 
 // ini pindah ke component done
 // props di destructuring done
-function Card({titleCourse, ins_name, bgCourse, ins_photo, courseid, local}) {
+function Card({data:{
+            title, 
+            image, 
+            instructors: {0:{ name, photo }},
+            instructor_role,
+            }
+            }){
     // ngga perlu props dimasukkin ke state langsung ambil data ke props done
-   
-    
+    // const navigate = useNavigate();
+    // console.log(title);
+    function checkHandleSuccess(e, course, loc ){
+        if(handleToDetailCourse(e, course, loc) === true){
+            // navigate(`/detailcourse/${courseid}`);
+        }
+        else{
+            return
+        }
+    }
     // masukin ke utils done
     // async function handleToDetailCourse(e) done
-
+    console.log(photo)
     return (
         <div className='card-inside'>
             <div className="top-section">
-                    <img src={bgCourse} alt="" />
+                    <img src={image} alt="" />
             </div>
             <div className="bottom-section">
                     <div className="title-section">
-                        {titleCourse}
+                        {title}
                     </div>
                     <div className="instructor-section">
-                        <img src={ins_photo} alt="" />
+                        <img src={photo} alt="" />
                         <div className="instructor-detail">
                             <div className="instructor-name">
-                                {ins_name}
+                                {name}
                             </div>
                             <div className="instructor-role">
-                                {ins_role}
+                                {instructor_role}
                             </div>
                         </div>
                     </div>
                     <div className="layerButton">
-                        <button id='courseBtn' onClick={ (e)=> handleToDetailCourse(e, courseid, local.user_id) }>Lanjut</button>
+                        <button id='courseBtn' onClick={ (e)=> checkHandleSuccess(e) }>Lanjut</button>
                     </div>
             </div>
         </div>
