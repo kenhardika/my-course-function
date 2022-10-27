@@ -19,7 +19,7 @@ async function loginAPI(data){
         body: formBody,
     }).then((response) => response.json()).catch((reject)=> console.log(reject));
 }
-class login extends Component {
+class Login extends Component {
     constructor(props){
         super(props);
         this.navToMyCourse = this.navToMyCourse.bind(this);
@@ -167,4 +167,4 @@ class login extends Component {
         );
     }
 }
-export default login;       
+export default Login;       

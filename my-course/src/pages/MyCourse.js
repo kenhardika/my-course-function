@@ -37,7 +37,7 @@ function MyCourse(props) {
     
 
   useEffect(()=>{
-    const hitAPI = fetchCourses(idCourse.allcourse)
+    const hitAPI = fetchCourses(idCourse.id)
     hitAPI.then((data)=> {
       setDataCards(data.data) 
       // console.log(data);
