@@ -30,9 +30,14 @@ class login extends Component {
             user_id:'', 
         }
     }
+
+    // taro handle submit di sini
+    // handleSubmit() {
+    // }
     
     render() {
 
+        // handle submit jangan di dalam render
         const handleSubmit = async e => {
             e.preventDefault();
             const responseAPI = await loginAPI(this.state);        
@@ -53,68 +58,102 @@ class login extends Component {
             } 
         }
         
+        // ini jangan update state di dalam render
         if (this.state.errorLogin === true){
             this.setState({
                 errorLogin: false
             });
+            // ini jangan redirect di dalam render
             window.location.href = `/`; // ${}
             alert('Error: Login Failed');
             return 
         }
         
         return (
-            <div className='loginPage'>
-                <div className="left-section">
-                    <div className="layerText">
-                        <p> KOMUNITAS MEA </p>
-                        <p> Komunitas Jago Jualan Online </p>
-                    </div>
-                </div>
-                <div className="right-section">
-                    <div className="right-layer">
-                            <div className="loginTitleLayer">
-                                <p>MASUK</p>  
-                            </div>
-                            <div className="loginBannerLayer">
-                                <p>Silakan Masuk ke akun Komunitas MEA kamu!</p>
-                            </div>
-                            <form className='formLayer' method="post" action='/' onSubmit={ handleSubmit }>
-                                <div className="inputForm">
-                                    <label htmlFor="inputName">Nama Lengkap: </label>
-                                    <input type="text" id="inputName" placeholder='Masukan Nama Lengkap' onChange={(e)=>{
-                                        this.setState({
-                                            name: e.target.value
-                                        })
-                                    }} required/>
-                                </div>
-                                
-                                <div className="inputForm">
-                                    <label htmlFor="inputText">Email: </label>
-                                    <input type="text" id="inputText" placeholder='Masukan Email' onChange={(e)=>{ 
-                                        this.setState({
-                                            email: e.target.value
-                                        })
-                                    }} required/>
-                                </div>
-                                <div className="inputForm">
-                                    <label htmlFor="inputPass">Kata Sandi: </label>
-                                    <input type="password" id="inputPass" placeholder='Masukan Kata Sandi' onChange={(e)=>{ 
-                                        this.setState({
-                                            password: e.target.value
-                                        })
-                                    }} required/>
-                                </div>
-                                
-                                <a href='/'> lupa kata sandi? </a>
-                                
-                                <div className="layerButton">
-                                    <button id='submitBtn' type='submit' > Masuk </button>    
-                                </div>
-                                <div className='errorLayer'></div>
-                            </form>
-                    </div>
-                </div> 
+          <div className="loginPage">
+            <div className="left-section">
+              <div className="layerText">
+                <p> KOMUNITAS MEA </p>
+                <p> Komunitas Jago Jualan Online </p>
+              </div>
             </div>
+            <div className="right-section">
+              <div className="right-layer">
+                <div className="loginTitleLayer">
+                  <p>MASUK</p>
+                </div>
+                <div className="loginBannerLayer">
+                  <p>Silakan Masuk ke akun Komunitas MEA kamu!</p>
+                </div>
+                <form
+                  className="formLayer"
+                  method="post"
+                  action="/"
+                  onSubmit={handleSubmit}
+                >
+                  <div className="inputForm">
+                    <label htmlFor="inputName">Nama Lengkap: </label>
+                    <input
+                      type="text"
+                      id="inputName"
+                      placeholder="Masukan Nama Lengkap"
+                      onChange={(e) => {
+                        this.setState({
+                          name: e.target.value,
+                        });
+                      }}
+                      required
+                    />
+                  </div>
+
+                  <div className="inputForm">
+                    <label htmlFor="inputText">Email: </label>
+                    {/* onchange nya coba dibikin method */}
+                    <input
+                      type="text"
+                      id="inputText"
+                                    placeholder="Masukan Email"
+                                    // ini kasih nama email
+                                    name="email"
+                      //   onChange={this.onChange} pakai e.target.name buat get property nya dan value nya e.target.value
+                      onChange={(e) => {
+                        this.setState({
+                          email: e.target.value,
+                        });
+                      }}
+                      required
+                    />
+                  </div>
+                  <div className="inputForm">
+                    <label htmlFor="inputPass">Kata Sandi: </label>
+                    {/* onchange nya coba dibikin method */}
+                    <input
+                      type="password"
+                      id="inputPass"
+                      placeholder="Masukan Kata Sandi"
+                      //   onChange={this.onChange}
+                      onChange={(e) => {
+                        this.setState({
+                          password: e.target.value,
+                        });
+                      }}
+                      required
+                    />
+                  </div>
+
+                  <a href="/"> lupa kata sandi? </a>
+
+                  <div className="layerButton">
+                    <button id="submitBtn" type="submit">
+                      {" "}
+                      Masuk{" "}
+                    </button>
+                  </div>
+                  <div className="errorLayer"></div>
+                </form>
+              </div>
+            </div>
+          </div>
         );
     }
 }

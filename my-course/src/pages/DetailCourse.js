@@ -1,4 +1,4 @@
-import React, {  } from 'react';
+import React from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchDetailCourse } from './Card';
 import Header from './Header';
@@ -12,32 +12,42 @@ function DetailCourse(props) {
 
     // const [link, setLink] = useState();
 
-async function fetchAPIDetailCourse(){
-        let local = await JSON.parse(localStorage.getItem('data_user_login'));
-        let detailCourseAPI = await fetchDetailCourse(courseid.alldetailcourse, local.user_id);
-        console.log(detailCourseAPI.data.chapters);
-        
-        let chapterTitles = [];
-        let chapterVids = [];
+    async function fetchAPIDetailCourse() {
+      // useEffect(() => {
+      //   fetch("https://randomuser.me/api/")
+      //     .then((results) => results.json())
+      //     .then((data) => {
+      //       setData(data);
+      //     });
+      // }, [setData]);
 
-        detailCourseAPI.data.chapters.forEach((chapter)=> {
-            // console.log(chapter.title);
-            
-            chapter.lessons.forEach((lesson)=>{
-                // console.log(lesson.link);
-                chapterVids.push(lesson.link);
-                chapterTitles.push(lesson.title);
-            })
+      let local = await JSON.parse(localStorage.getItem("data_user_login"));
+      let detailCourseAPI = await fetchDetailCourse(
+        courseid.alldetailcourse,
+        local.user_id
+      );
+      console.log(detailCourseAPI.data.chapters);
 
-        })
-        // console.log(chapterTitles);
-        // console.log(chapterVids);
+      let chapterTitles = [];
+      let chapterVids = [];
 
-        return {
-            chapterTitles,
-            chapterVids
-        }
-}    
+      detailCourseAPI.data.chapters.forEach((chapter) => {
+        // console.log(chapter.title);
+
+        chapter.lessons.forEach((lesson) => {
+          // console.log(lesson.link);
+          chapterVids.push(lesson.link);
+          chapterTitles.push(lesson.title);
+        });
+      });
+      // console.log(chapterTitles);
+      // console.log(chapterVids);
+
+      return {
+        chapterTitles,
+        chapterVids,
+      };
+    }    
 
     async function handleNextBtn(e){
         // let nextVid = '';

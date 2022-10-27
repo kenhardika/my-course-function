@@ -44,12 +44,13 @@ function Card(props) {
     })
     // console.log(local);
     
+    // masukin ke utils
     async function handleToDetailCourse(e){
         e.preventDefault();
         const responseAPI = await fetchDetailCourse(courseid, local.user_id);
         // console.log(responseAPI); // response OK
         if(responseAPI.message === 'Success.'){
-            
+            // ini redirect ngga pke href, pake nya react-router-dom
             window.location.href = `/detailcourse/${courseid}`; // ${}
         }
         else{
@@ -89,4 +90,6 @@ function Card(props) {
     );
 }
 
+// ini yang diexport componentnya aja
 export { Card, fetchDetailCourse };
+
