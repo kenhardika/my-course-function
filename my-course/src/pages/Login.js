@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { withRouter } from '../high-order-comp/withRouter';
 
 async function loginAPI(data){
     let formBody = [];
@@ -17,12 +16,15 @@ async function loginAPI(data){
         mode: 'cors', 
         credentials: 'include',
         body: formBody,
-    }).then((response) => response.json()).catch((reject)=> console.log(reject));
+      }).then((response) =>
+       response.json()
+      ).catch((reject)=>
+      console.log(reject)
+      );
 }
 class Login extends Component {
     constructor(props){
         super(props);
-        this.navToMyCourse = this.navToMyCourse.bind(this);
         this.state = {
             email: 'default',
             password: 'default',
@@ -31,13 +33,6 @@ class Login extends Component {
             user_id:'', 
         }
     }
-
-    navToMyCourse(linkResponse){
-      // this.props.history.push(linkResponse);
-      //  return <Navigate to={linkResponse} replace={true} />
-      this.props.navigate(linkResponse)
-    }
-
     onChangeEvent(e){
       e.preventDefault();
         this.setState({
@@ -53,15 +48,30 @@ class Login extends Component {
      // handle submit jangan di dalam render done
     handleSubmit = async (e) => {
       e.preventDefault();
+      const {history} = this.props
+      // console.log(this.props);
       // const navigate = useNavigate();
+      // this.setState({
+      //   user_id:335
+      // });
+      // console.log(this.state.user_id);
+      
+      // localStorage.setItem("data_user_login", JSON.stringify(this.state));
+      // history.push(`/mycourse/${this.state.user_id}`)
+      // bypass dulu karena error cors
       const responseAPI = await loginAPI(this.state);        
       // console.log(responseAPI);
       if (responseAPI.message === 'Success.'){
       // console.log(responseAPI.data.user_id);
           console.log('login success');
+          console.log(responseAPI.data.user_id);
+          this.setState({
+            user_id: responseAPI.data.user_id
+            });
+          console.log(this.state)
           localStorage.setItem("data_user_login", JSON.stringify(this.state));
-         
-         this.navToMyCourse(`/mycourse/${responseAPI.data.user_id}`);
+          history.push(`/mycourse/${responseAPI.data.user_id}`)
+        //  this.navToMyCourse(`/mycourse/${responseAPI.data.user_id}`);
           // navigate(`/mycourse/${responseAPI.data.user_id}`);
           // window.location.href = `/mycourse/${responseAPI.data.user_id}`;
       } 
@@ -70,12 +80,13 @@ class Login extends Component {
             errorLogin: true
         });
         console.log('Error: login failed, API fetch failed');
-        alert('Error: Login Failed');
-        return 
-      } 
+      //   alert('Error: Login Failed');
+      //   return
+      }
+       
       // ini jangan update state di dalam render done
      
-    }
+}
     render() {
 
         return (
@@ -170,4 +181,4 @@ class Login extends Component {
         );
     }
 }
-export default withRouter(Login);       
+export default Login;       

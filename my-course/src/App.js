@@ -1,22 +1,23 @@
 import './App.css';
-import {BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import {BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import Login from './pages/Login';
 import Error from './pages/Error';
-import MyCourse from './pages/MyCourse';
+// import MyCourse from './pages/MyCourse';
 import DetailCourse from './pages/DetailCourse';
+import MyCourseClass from './pages/MyCourseClass';
 
 
 function App() {
   return (
     <Router>
       {/* outside this Routes, (nav & footer) will stay, page wont changing. only inside Routes could change */}
-      <Routes>
-        <Route exact path='/my-course' component ={Login} element={<Login/>}/>
-        <Route path="/mycourse/:id" element={<MyCourse/>} />
+      <Switch>
+        <Route exact path='/' component={Login}/>
+        <Route exact path="/mycourse/:id" component={MyCourseClass} />
         <Route path="/detailcourse/:alldetailcourse" element={<DetailCourse/>} />
         {/* <Route path='/profile/:username' element={<Profile/>}></Route> */}
         <Route path='*' element={<Error/>}/>
-      </Routes>
+      </Switch>
       <footer> <p>Kenza Mahardika @ 2022</p></footer>
     </Router>
   );
