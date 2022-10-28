@@ -40,6 +40,12 @@ class Login extends Component {
         });
         // console.log(this.state);
     }
+    changeState(key, value){
+      this.setState({
+        [key]:value
+      })
+      console.log(this.state);
+    }
 
     // taro handle submit di sini done
     // handleSubmit() { done
@@ -64,11 +70,12 @@ class Login extends Component {
       if (responseAPI.message === 'Success.'){
       // console.log(responseAPI.data.user_id);
           console.log('login success');
-          console.log(responseAPI.data.user_id);
-          this.setState({
-            user_id: responseAPI.data.user_id
-            });
-          console.log(this.state)
+          // console.log(responseAPI.data.user_id);
+          // this.setState({
+          //   user_id: responseAPI.data.user_id
+          //   });
+          // console.log(this.state)
+
           localStorage.setItem("data_user_login", JSON.stringify(this.state));
           history.push(`/mycourse/${responseAPI.data.user_id}`)
         //  this.navToMyCourse(`/mycourse/${responseAPI.data.user_id}`);

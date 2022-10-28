@@ -14,7 +14,7 @@ function App() {
       <Switch>
         <Route exact path='/' component={Login}/>
         <Route exact path="/mycourse/:id" component={MyCourseClass} />
-        <Route path="/detailcourse/:alldetailcourse" element={<DetailCourse/>} />
+        <Route exact path="/detailcourse/:course_id/:user_id" component={<DetailCourse/>} />
         {/* <Route path='/profile/:username' element={<Profile/>}></Route> */}
         <Route path='*' element={<Error/>}/>
       </Switch>
