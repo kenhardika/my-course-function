@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Header from './Header';
 import fetchDetailCourse from '../utils/fetchDetailCourse'
-import VideoCourse from './VideoCourse';
 // import mockjson from './mock.json';
 class DetailCourseClass extends Component {
     constructor(props) {
@@ -13,15 +12,10 @@ class DetailCourseClass extends Component {
                         link:[],
                         title:[],
                         lesson_id:[],
-                        now:{   link:'', 
-                                title:'', 
-                                lesson_id:''
-                            },
                         counter:0
                         };
         this.handleNextButton = this.handleNextButton.bind(this);
         this.handlePreviousButton = this.handlePreviousButton.bind(this);
-        // this.changeNowPlaying = this.changeNowPlaying(this);
     }
 
     async fetchResponseAPI(course,user){
@@ -55,23 +49,6 @@ class DetailCourseClass extends Component {
         // console.log(prevState);
         const {data:{chapters}} = prevState;
         if(this.state.link.length){
-            if(!this.state.now.link){
-                this.setState({
-                    now: {
-                        link: this.state.link[this.state.counter],
-                        title: this.state.title[this.state.counter],
-                        lesson_id: this.state.lesson_id[this.state.counter],
-                    }
-                })
-                console.log('set State kosong dan baru diisi')
-                return
-            }
-            else if(this.state.now.link.length){ // bakal loop terus ganti kondisi.
-                
-                console.log('state sudah adaan');
-                return
-            }
-
             return
         }
         else if(!this.state.link.length){
@@ -90,11 +67,7 @@ class DetailCourseClass extends Component {
             return
         }
     }
-
-    componentWillUnmount() {
-
-    }
-
+   
     handleNextButton(e){
         e.preventDefault();
         // console.log(this.state.title[47]);
@@ -122,62 +95,26 @@ class DetailCourseClass extends Component {
                 counter: prev.counter - 1 
             }));
         }
-        // console.log('pprevioys')
-        // this.setState(prev=>({
-        //     counter: prev.counter-1 
-        // }));
+     
     }
-
-    changeNowPlaying(num){
-        // if(!this.state.now.link){
-        //     this.setState({
-        //         now: {
-        //             link: this.state.link[num],
-        //             title: this.state.title[num],
-        //             lesson_id: this.state.lesson_id[num],
-        //         }
-        //     })
-        //     console.log('set State kosong dan baru diisi')
-        //     return
-        // }
-        // else if(this.state.now.link.length){
-        //     console.log('state sudah adaan');
-        //     return
-        // }
-    }
-
-    // async checkEachChapters(chap){
-    // return await chap.map((dat)=> console.log(dat));
-    // }
 
     render() {
         // console.log(this.state.title);
-        console.log(this.state.counter);
+        // console.log(this.state.counter);
+        const counter = this.state.counter;
         const [...title] = this.state.title;
         const [...link] = this.state.link;
 
-        if(this.state.link.length>0){
-            // console.log(this.state.lessons);
-            const [...link] = this.state.link;
-            // console.log(link[2]);
-            // console.log(this.state.now)
-        }
-        if(this.state.title.length>0){
-            // console.log(this.state.lessons);
-            const [...title] = this.state.title;
-            // console.log(title[2]);
-            // console.log(this.state.now)
-        }
-        console.log(this.state.link[this.state.counter])
+        // console.log(this.state.link[this.state.counter])
         return (
             <div>
             <Header></Header>
             <main>
-                <p>{title[this.state.counter]}</p>
+                <p>{title[counter]}</p>
                 {/* <VideoCourse link={link[this.state.counter]}></VideoCourse> */}
-                <iframe title='videoplayer' src={link[this.state.counter]} 
+                <iframe title='videoplayer' src={link[counter]} 
                         width={1300} height={500} ></iframe>
-                <p>{link[this.state.counter]}</p>
+                <p>{link[counter]}</p>
                 {/* {chapters.map((arr)=><li key={arr.chapter_id}> </li>)} */}
 
                 <div className="buttonControls">
