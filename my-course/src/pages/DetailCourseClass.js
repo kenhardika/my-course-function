@@ -10,25 +10,21 @@ class DetailCourseClass extends Component {
                             chapters:[],
                             title:''
                             },
-                        lessons:[]
+                        link:[],
+                        title:[],
+                        lesson_id:[],
+                        now:{   link:'', 
+                                title:'', 
+                                lesson_id:''
+                            },
+                        counter:0
                         };
-        // this.addLessons= this.addLessons.bind(this);
+        this.handleNextButton = this.handleNextButton.bind(this);
+        this.handlePreviousButton = this.handlePreviousButton.bind(this);
+        // this.changeNowPlaying = this.changeNowPlaying(this);
     }
 
-    // addLessons(lesson){
-    //     this.setState({
-    //         // ...prevState,
-    //         // [lessons]:[value]
-    //         lessons: this.state.lessons.push(lesson)
-    //     });
-    //     // console.log(this.state.lessons)
-    // }
-
     async fetchResponseAPI(course,user){
-
-        // if(!responseAPI) return;
-        // if(!responseAPI.data.length)return;
-        // console.log(responseAPI);
         try{
             const responseAPI = await fetchDetailCourse(course, user); // ToDo: async await
             const response = await responseAPI.data;
@@ -53,85 +49,101 @@ class DetailCourseClass extends Component {
             }
         }} = this.props;
         this.fetchResponseAPI(course_id,user_id);
-
-        // const {data:{
-        //     title,
-        //     chapters
-        //     }
-        // } = this.state;
-        // console.log(chapters);
-        // const [arr1, arr2, arr3, arr4, arr5] = chapters;
-        // if(chapters.length>0){
-        //     chapters.map((arr)=>
-        //         arr.lessons.map((lesson)=> {
-        //             // console.log(lesson.link);
-        //             // console.log(lesson.lesson_id);
-        //             // console.log(lesson.title);
-        //             this.setState({
-        //                 lessons: lesson
-        //             });
-        //             // console.log(lesson);
-        //             // change state
-        //         })
-        // )}
     }
 
     componentDidUpdate(prevProps, prevState){
         // console.log(prevState);
         const {data:{chapters}} = prevState;
-        // console.log(chapters);
-        // const [...rest] = chapters
-        // console.log(rest);
+        if(this.state.link.length){
+            if(!this.state.now.link){
+                this.setState({
+                    now: {
+                        link: this.state.link[this.state.counter],
+                        title: this.state.title[this.state.counter],
+                        lesson_id: this.state.lesson_id[this.state.counter],
+                    }
+                })
+                console.log('set State kosong dan baru diisi')
+                return
+            }
+            else if(this.state.now.link.length){ // bakal loop terus ganti kondisi.
+                
+                console.log('state sudah adaan');
+                return
+            }
 
-        if(this.state.lessons.length){
-            // console.log('something');
-            // console.log(this.state.lessons);
             return
         }
-        else if(!this.state.lessons.length){
-            // console.log('nothing');
-            // this.setState({
-            //     lessons: ['something']
-            // })
+        else if(!this.state.link.length){
             chapters.map((arr)=>
                 arr.lessons.map((lesson)=>
                 // prev = this.state previous, next = this.state kosong
                 this.setState((prev)=>({
-                        lessons: prev.lessons.concat(lesson)
+                        link: prev.link.concat(lesson.link),
+                        title: prev.title.concat(lesson.title),
+                        lesson_id: prev.lesson_id.concat(lesson.lesson_id),
                     }
-                )))
+                ))
+                )
             )
+
             return
         }
-
-        // if(chapters.length>0){
-        //     this.setState({
-        //         lessons: ['this is lessons']
-        //     })
-        // }
-
-        // if(chapters.length>0){
-        //     chapters.map((arr)=>
-        //         arr.lessons.map((lesson)=> {
-        //             // console.log(lesson.link);
-        //             // console.log(lesson.lesson_id);
-        //             // console.log(lesson.title);
-        //             this.setState(
-        //                 {
-        //                     lessons: prevState.lessons.concat(lesson)
-        //                 })
-
-        //             // this.setState((prev, next)=>({
-        //             //     lessons: prev.lessons.concat(next)
-        //             // }));
-        //             // console.log(lesson);
-        //             // change state
-        //         })
-        // )}
     }
 
     componentWillUnmount() {
 
+    }
+
+    handleNextButton(e){
+        e.preventDefault();
+        // console.log(this.state.title[47]);
+        if(this.state.counter >= (this.state.title.length-1)){
+            this.setState(prev=>({
+                counter: (prev.counter+1) - (this.state.title.length) 
+            }));
+        }
+        else{
+            this.setState(prev=>({
+                counter: prev.counter +1 
+            }));
+        }
+    }
+
+    handlePreviousButton(e){
+        e.preventDefault();
+        if(this.state.counter === 0){
+            this.setState(prev=>({
+                counter: prev.counter + (this.state.link.length-1) 
+            }));
+        }
+        else{
+            this.setState(prev=>({
+                counter: prev.counter - 1 
+            }));
+        }
+        // console.log('pprevioys')
+        // this.setState(prev=>({
+        //     counter: prev.counter-1 
+        // }));
+    }
+
+    changeNowPlaying(num){
+        // if(!this.state.now.link){
+        //     this.setState({
+        //         now: {
+        //             link: this.state.link[num],
+        //             title: this.state.title[num],
+        //             lesson_id: this.state.lesson_id[num],
+        //         }
+        //     })
+        //     console.log('set State kosong dan baru diisi')
+        //     return
+        // }
+        // else if(this.state.now.link.length){
+        //     console.log('state sudah adaan');
+        //     return
+        // }
     }
 
     // async checkEachChapters(chap){
@@ -139,81 +151,38 @@ class DetailCourseClass extends Component {
     // }
 
     render() {
-        // console.log(this.state.data.chapters)
-        console.log(this.state.lessons);
-        const {lessons } = this.state.lessons;
-        console.log(lessons)
-    //     const {data:{
-    //         title,
-    //         chapters
-    //     }
-    // } = this.state;
-    // chapters.map(arr=>
-    //     this.setState({
-    //         lessons: this.state.lessons.push(arr)
-    //     })
-    //     )
-        // console.log(chapters);
-        // const [arr1, arr2, arr3, arr4, arr5] = chapters;
-        // console.log(this.state.lessons);
-        // const {data:{
-        //             title,
-        //             chapters
-        //             }
-        //         } = this.state;
-        // console.log(chapters);
-        // // const [arr1, arr2, arr3, arr4, arr5] = chapters;
-        // chapters.map((arr)=>
-        //     arr.lessons.map((lesson)=> {
-        //         console.log(lesson.link);
-        //         console.log(lesson.lesson_id);
-        //         console.log(lesson.title);
-        //         // this.changeState('id', lesson.lesson_id);
-        //         // change state
-        //     })
-        // )
-        // console.log(this.state.lessons);
+        // console.log(this.state.title);
+        console.log(this.state.counter);
+        const [...title] = this.state.title;
+        const [...link] = this.state.link;
 
-
-        // setTimeout(()=>{
-
-            // console.log('udah bagus');
-            // console.log(this.state.data.chapters[0]);
-        // if(this.state.data.length){
-        //     console.log('udah bagus')
-        // }
-        // console.log(this.state.data.chapters)
-        // if(!this.state.data.length){
-            // const{data} = this.state;
-            // console.log(data.chapters);
-            // console.log(chapters);
-        // }
-
-
-        // if(chapters.length){
-        //     console.log(chapters[0]);
-        // }
-        // chapters.forEach(item=>console.log(item));
-
-        // const {data: {title, chapters:chap } } = this.state; // ToDO: untuk chapters mainin index chapter & lesson
-        // console.log(chap);
-        // console.log()
-        // todo: class dan function beda repo
-        // this.checkEachChapters(chapters)
-        // chapters.map((data)=>console.log(data));
-
-        // }, 300);
+        if(this.state.link.length>0){
+            // console.log(this.state.lessons);
+            const [...link] = this.state.link;
+            // console.log(link[2]);
+            // console.log(this.state.now)
+        }
+        if(this.state.title.length>0){
+            // console.log(this.state.lessons);
+            const [...title] = this.state.title;
+            // console.log(title[2]);
+            // console.log(this.state.now)
+        }
+        console.log(this.state.link[this.state.counter])
         return (
             <div>
             <Header></Header>
             <main>
-                <p>{"title"}</p>
-                <VideoCourse></VideoCourse>
+                <p>{title[this.state.counter]}</p>
+                {/* <VideoCourse link={link[this.state.counter]}></VideoCourse> */}
+                <iframe title='videoplayer' src={link[this.state.counter]} 
+                        width={1300} height={500} ></iframe>
+                <p>{link[this.state.counter]}</p>
                 {/* {chapters.map((arr)=><li key={arr.chapter_id}> </li>)} */}
 
                 <div className="buttonControls">
-                    <button id='nextBtn'>next</button>
-                    <button id='prevBtn'>prev</button>
+                    <button id='prevBtn' onClick={this.handlePreviousButton}>prev</button>
+                    <button id='nextBtn' onClick={this.handleNextButton}>next</button>
                 </div>
             </main>
             </div>

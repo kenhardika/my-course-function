@@ -232,13 +232,17 @@ main{
   height: 90vh;
   width: 100vw;
   display: flex;
-  padding: 200px 50px;
+  padding: 10% 50px;
   flex-direction: column;
 }
 
 main > p:first-child {
   font-size: 1.5rem;
 }
+main > p:nth-child(3){
+  font-size: 0.8rem;
+}
+
 .content{
   display: flex;
   width: 100%;
@@ -338,3 +342,12 @@ main > p:first-child {
   height: 100%;
 }
 
+.buttonControls{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.buttonControls button{
+  width: 200px;
+  height: 30px;
+}

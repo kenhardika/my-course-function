@@ -5,7 +5,7 @@ function VideoCourse(props) {
     return (
         <div className='videoCourseLayer'>
             <div className="layerVideo">
-                <iframe title='video1' src={props.link} frameBorder="0"></iframe>
+                <iframe title='video1' src={props.link} width={1000} height={500} ></iframe>
             </div>
         </div>
     );
