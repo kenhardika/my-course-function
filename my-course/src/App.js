@@ -1,6 +1,7 @@
 import './App.css';
 import {BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import Login from './pages/Login';
+import LoginFunction from './pages/LoginFunction';
 import Error from './pages/Error';
 // import MyCourse from './pages/MyCourse';
 // import DetailCourse from './pages/DetailCourse';
@@ -13,7 +14,7 @@ function App() {
     <Router>
       {/* outside this Routes, (nav & footer) will stay, page wont changing. only inside Routes could change */}
       <Switch>
-        <Route exact path='/' component={Login}/>
+        <Route exact path='/' component={LoginFunction}/>
         <Route exact path="/mycourse/:id" component={MyCourseClass} />
         <Route exact path="/detailcourse/:course_id/:user_id" component={DetailCourseClass} />
         {/* <Route path='/profile/:username' element={<Profile/>}></Route> */}
