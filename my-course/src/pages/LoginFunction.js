@@ -4,8 +4,8 @@ import axios from 'axios';
 function fetchAPIAxios(data){
     let formBody = [];
     for (let property in data) {
-        let encodedKey = encodeURIComponent(property);
-        let encodedValue = encodeURIComponent(data[property]);
+        const encodedKey = encodeURIComponent(property);
+        const encodedValue = encodeURIComponent(data[property]);
         formBody.push(encodedKey + "=" + encodedValue);
     }
     formBody = formBody.join("&");
@@ -17,13 +17,6 @@ function fetchAPIAxios(data){
         },
         withCredentials: true
       });
-      response.then((res)=>
-        {
-          return res
-        }
-      ).catch((err)=>{
-        throw Error(err)
-      })
       return response
     }
 

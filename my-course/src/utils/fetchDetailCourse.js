@@ -9,11 +9,6 @@ async function fetchDetailCourse(course_id, user_id){
           },
           withCredentials: true
         });
-        response.then((res)=>
-          res.data
-        ).catch((err)=>{
-          throw Error(err)
-        })
         return response
       }
     catch{

@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
+import { useCallback } from 'react';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import fetchDetailCourse from '../utils/fetchDetailCourse';
@@ -10,33 +11,29 @@ function DetailCourse(props) {
     const [data, setData] = useState({});
     const [chapterIndex, setChapterIndex] = useState(0);
     const [lessonIndex, setLessonIndex] = useState(0);
-    
-    async function fetchCourse(courseid, userid){
+  
+    const fetchCourses = useCallback(async () => {
       try{
-        const response = await fetchDetailCourse(courseid, userid);
-        if(!Object.keys(data).length){
+        const response = await fetchDetailCourse(paramsForFetch.course_id, paramsForFetch.user_id);
           setData(response.data.data);
-        }
         return response
         }
-      catch{
-        throw Error('Error Fetch Course!')
-      }
-    }
+      catch{}
+    }, [paramsForFetch.course_id,paramsForFetch.user_id]);
 
     useEffect(()=>{
-      fetchCourse(paramsForFetch.course_id, paramsForFetch.user_id);
-    })
+      fetchCourses();
+    }, [fetchCourses]);
 
     function handleNextButton(e){
       e.preventDefault();
       if (data.chapters[chapterIndex].lessons[lessonIndex + 1]){ 
-        setLessonIndex(lessonIndex+1);
+        setLessonIndex((cur)=> cur+1);
         return
       }
       else if(!data.chapters[chapterIndex].lessons[lessonIndex + 1]){
         if(data.chapters[chapterIndex + 1]){
-           setChapterIndex(chapterIndex + 1);
+           setChapterIndex((cur)=> cur + 1);
            setLessonIndex(0);
             return
         }
@@ -51,18 +48,18 @@ function DetailCourse(props) {
     function handlePreviousButton(e){
       e.preventDefault();
         if (data.chapters[chapterIndex].lessons[lessonIndex - 1]){ 
-            setLessonIndex(lessonIndex - 1);
+            setLessonIndex((cur)=> cur - 1);
             return
         }
         else if(!data.chapters[chapterIndex].lessons[lessonIndex - 1]){
             if(data.chapters[chapterIndex - 1]){ 
-                setChapterIndex(chapterIndex - 1);
-                setLessonIndex(data.chapters[chapterIndex - 1].lessons.length-1);
+                setChapterIndex((cur)=> cur - 1);
+                setLessonIndex(data.chapters[chapterIndex-1].lessons.length - 1); // referensi chapter index mengacu keluar dari lesson index/current lesson index
                 return
             }
             else if(!data.chapters[chapterIndex - 1]){ 
-                setChapterIndex(data.chapters.length-1);
-                setLessonIndex(data.chapters[data.chapters.length-1].lessons.length-1);
+                setChapterIndex(data.chapters.length - 1);
+                setLessonIndex(data.chapters[data.chapters.length - 1].lessons.length - 1);
                 return
             }
         }    

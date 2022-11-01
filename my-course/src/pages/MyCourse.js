@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 import { useParams } from 'react-router-dom';
 import { Card } from '../components/Card';
 import Header from './Header';
@@ -8,22 +8,17 @@ function MyCourse(props) {
     const idCourse = useParams(); 
     const [dataCards, setDataCards] = useState([]);    
 
-  async function fetchCourses(courseid){
-    try{
-      const responseAPI = await fetchCoursesCards(courseid);
-      if(!dataCards.length){
+  const fetchCourses = useCallback(async () => {
+    try {
+      const responseAPI = await fetchCoursesCards(idCourse.id);
         setDataCards(responseAPI.data.data);
-      }
-      return responseAPI.data.data
-    }
-    catch{
+      return responseAPI.data.data;
+    } catch {}
+  }, [idCourse.id]);
 
-    }
-  }
-
-  useEffect(()=>{
-    fetchCourses(idCourse.id);
-    });
+  useEffect(() => {
+    fetchCourses();
+  }, [fetchCourses]);
 
   function navigateToDetailCard(e, course_id){
     e.preventDefault();
