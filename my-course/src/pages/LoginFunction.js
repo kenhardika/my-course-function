@@ -87,7 +87,7 @@ function LoginFunction(props) {
                   id="inputName"
                   placeholder="Masukan Nama Lengkap"
                   name='name'
-                  onChange={onChangeEvent} //handle on change
+                  onChange={onChangeEvent} 
                   required
                 />
               </div>
