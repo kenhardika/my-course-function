@@ -10,10 +10,7 @@ async function fetchDetailCourse(course_id, user_id){
           withCredentials: true
         });
         response.then((res)=>
-          {
-            // console.log(res.data);
-           return res.data 
-        }
+          res.data
         ).catch((err)=>{
           throw Error(err)
         })

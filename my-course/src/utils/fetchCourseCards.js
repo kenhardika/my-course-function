@@ -1,18 +1,6 @@
 import axios from 'axios';
 
 async function fetchCoursesCards(user_id){
-    // try{
-    //     const getCourse = await fetch(`https://staging.komunitasmea.com/api/user/${user_id}/courses/active`, {
-    //         method:'GET', 
-    //         headers: {
-    //             'Content-Type': 'application/x-www-form-urlencoded'
-    //           },
-    //         mode: 'cors', 
-    //         credentials: 'include',
-    //     });
-    //     const responseCourses = await getCourse.json();
-    //     return responseCourses
-    // }
     try{
         let response =
         axios.get(`https://staging.komunitasmea.com/api/user/${user_id}/courses/active`, {
@@ -23,7 +11,6 @@ async function fetchCoursesCards(user_id){
         });
         response.then((res)=>
           {
-            console.log(res.data);
            return res.data 
         }
         ).catch((err)=>{

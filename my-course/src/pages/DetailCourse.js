@@ -14,15 +14,10 @@ function DetailCourse(props) {
     async function fetchCourse(courseid, userid){
       try{
         const response = await fetchDetailCourse(courseid, userid);
-        // console.log(response.data.data);
         if(!Object.keys(data).length){
           setData(response.data.data);
         }
-        
         return response
-        // response.then((dataRes)=>{
-        //   return dataRes.data
-        // })
         }
       catch{
         throw Error('Error Fetch Course!')
@@ -72,8 +67,6 @@ function DetailCourse(props) {
             }
         }    
     }
-
-    // console.log(data);
     return (
       <div className='detailCourse'>
         <Header></Header>
