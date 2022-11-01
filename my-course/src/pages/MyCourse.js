@@ -2,37 +2,35 @@ import React, {useEffect, useState} from 'react';
 import { useParams } from 'react-router-dom';
 import { Card } from '../components/Card';
 import Header from './Header';
-import fetchCourses from '../utils/fetchCourseCards';
+import fetchCoursesCards from '../utils/fetchCourseCards';
 
 function MyCourse(props) {
-    const idCourse = useParams(); // or use id to call API Request
-    // console.log(idCourse);
-    const [dataCards, setDataCards] = useState([]);
-  // di sini ada useState
-  // const [data, setData] = useState([])
+    const idCourse = useParams(); 
+    const [dataCards, setDataCards] = useState([]);    
 
-  // lifecycle dari react class component dan functional component
-  // saat dia pertama kali mount dia nge hit API
-  // classComponent => componentDidMount
-  // functional => useEffect
-    
+  async function fetchCourses(courseid){
+    try{
+      const responseAPI = await fetchCoursesCards(courseid);
+      if(!dataCards.length){
+        setDataCards(responseAPI.data.data);
+      }
+      return responseAPI.data.data
+    }
+    catch{
+
+    }
+  }
 
   useEffect(()=>{
-    const hitAPI = fetchCourses(idCourse.id)
-    hitAPI.then((data)=> {
-      setDataCards(data.data) 
-      // console.log(data);
-    }
-    );
-  }, [setDataCards, idCourse])
+    fetchCourses(idCourse.id);
+    });
 
-  // useEffect(() => {
-  // hit api fetchCourses dan setData si response nya
-  // })
+  function navigateToDetailCard(e, course_id){
+    e.preventDefault();
+    const {history} = props;
+    history.push(`/detailcourse/${course_id}/${idCourse.id}`)
+  }
 
-  // namanya ganti jadi idCourse, variable pake const done
-  // const cardData = dataCards.cards;
-  console.log(dataCards)
   return (
     <div>
       <Header></Header>
@@ -40,12 +38,7 @@ function MyCourse(props) {
         <p>Kelas</p> 
         <div className="content">
           <div className="cards">
-          {/* <button onClick={()=>console.log(dataCards)}> button check cards </button> */}
-            {/* ini ngga manual pake array map */}
-            {dataCards.map((item) => {return <Card key={item.course_id} data = {item} />}) }
-            {
-            /* <Card data={handleLogin(0).then((data) => data)} /> */}
-            {/* <Card data={handleLogin(1).then((data) => data)} /> */}
+            {dataCards.map((item) => {return <Card key={item.course_id} data = {item} navigateToDetailCard ={navigateToDetailCard}/>}) }
           </div>
         </div>
       </main>

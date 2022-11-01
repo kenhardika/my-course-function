@@ -1,29 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-async function loginAPI(data){
-    let formBody = [];
-    for (let property in data) {
-        let encodedKey = encodeURIComponent(property);
-        let encodedValue = encodeURIComponent(data[property]);
-        formBody.push(encodedKey + "=" + encodedValue);
-    }
-    formBody = formBody.join("&");
-    return fetch("https://staging.komunitasmea.com/api/login", {
-        method:'POST', 
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-          },
-        mode: 'cors', 
-        credentials: 'include',
-        body: formBody,
-      }).then((response) =>
-       response.json()
-      ).catch((reject)=>
-      console.log(reject)
-      );
-}
-
 function fetchAPIAxios(data){
     let formBody = [];
     for (let property in data) {
@@ -32,29 +9,35 @@ function fetchAPIAxios(data){
         formBody.push(encodedKey + "=" + encodedValue);
     }
     formBody = formBody.join("&");
-
-    axios.post("https://staging.komunitasmea.com/api/login", formBody, {
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            mode: 'cors', 
-            credentials: 'include',
-            body: formBody,
+    try{
+      let response =
+      axios.post("https://staging.komunitasmea.com/api/login", formBody, {
+        headers:{
+          'Content-Type': 'application/x-www-form-urlencoded',
         },
-    }).then((res)=>{
-        console.log(res);
-    }).catch((err)=>{
-        console.log(err);
-    })
+        withCredentials: true
+      });
+      response.then((res)=>
+        {
+          return res
+        }
+      ).catch((err)=>{
+        throw Error(err)
+      })
+      return response
+    }
 
+    catch{
+      throw Error('Error Fetch API');
+    }
+
+    
 }
 
 function LoginFunction(props) {
     const [loginData, setLoginData] = useState({
                 email:'',
                 password:'',
-                errorLogin:false,
-                name:'',
-                user_id:''
             })
     function onChangeEvent(e){
         e.preventDefault();
@@ -62,26 +45,17 @@ function LoginFunction(props) {
             [e.target.name]: e.target.value
         }))
     }
-    // console.log(loginData);
 
     async function handleSubmit(e){
         e.preventDefault();
         const {history} = props;
-        console.log(history);
-        const responseAPI = fetchAPIAxios(loginData);
-        console.log(responseAPI);
-        if (responseAPI.message === 'Success.'){
-            console.log('login success');
-            localStorage.setItem("data_user_login", JSON.stringify(loginData));
-            history.push(`/mycourse/${responseAPI.data.user_id}`)
-        }
-        else if(responseAPI.message !== 'Success.'){
-            setLoginData((prev)=>({
-                ...prev,
-                errorLogin: true
-            }));
-           console.log('Error: login failed, API fetch failed');
-        } 
+        const responseAPI = await fetchAPIAxios(loginData)
+        if (responseAPI.data.message === 'Success.'){
+          history.push(`/mycourse/${responseAPI.data.data.user_id}`)
+          }
+        else if(responseAPI.data.message !== 'Success.'){
+            throw Error('Error: Login Failed, check your credentials')
+          }
     }
 
     return (

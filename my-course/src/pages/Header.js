@@ -9,7 +9,7 @@ function Header(props) {
 
             <div className="profile-layer">
                         <img src="https://picsum.photos/id/1005/200/300/" alt="" id='avatar' />
-                        <p> Halo, { JSON.parse(localStorage.getItem('data_user_login')).name } </p>
+                        <p> Halo, User! </p>
             </div>
         </header>
     );
