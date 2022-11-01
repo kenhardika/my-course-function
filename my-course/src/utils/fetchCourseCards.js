@@ -9,13 +9,6 @@ async function fetchCoursesCards(user_id){
           },
           withCredentials: true
         });
-        response.then((res)=>
-          {
-           return res.data 
-        }
-        ).catch((err)=>{
-          throw Error(err)
-        })
         return response
       }
     catch{
